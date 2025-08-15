@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -55,9 +56,15 @@ fun AimantsDanimauxNavHost(navHostController: NavHostController) {
       route = Screen.AnimalDetails.route,
       arguments = Screen.AnimalDetails.navArguments
     ) {
+      backStackEntry ->
+      val animalId = backStackEntry.arguments?.getString("animalId") ?: ""
+      val animal = remember { AnimalData.findAnimalById(animalId) }
       AnimalDetailsScreen(
-        animal = AnimalData.findAnimalById(it.arguments?.getString("animalId") ?: ""),
-        onBackClick = { navHostController.navigateUp() }
+        animal = animal,
+        onBackClick = { navHostController.navigateUp() },
+        onEditClick = {
+          navHostController.navigate(Screen.CreateAnimal.createRoute(animalId))
+        }
       )
     }
     composable(route = Screen.CreateAnimal.route) {

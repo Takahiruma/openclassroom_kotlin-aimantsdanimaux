@@ -50,6 +50,7 @@ fun AnimalDetailsScreen(
   modifier: Modifier = Modifier,
   animal: Animal?,
   onBackClick: () -> Unit,
+  onEditClick: () -> Unit,
 ) {
   Scaffold(
     modifier = modifier,
@@ -78,7 +79,7 @@ fun AnimalDetailsScreen(
       ) {
         ExtendedFloatingActionButton(
           onClick = {
-            //TODO: à compléter
+            onEditClick()
           },
           icon = { Icon(Icons.Filled.Edit, stringResource(id = R.string.description_button_edit)) },
           text = { Text(text = stringResource(id = R.string.description_button_edit)) },
